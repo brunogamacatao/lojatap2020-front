@@ -1,0 +1,33 @@
+.produtos {
+  display: flex;
+  flex-wrap: wrap;
+
+  .produto {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 200px;
+    text-align: center;
+    padding: 5px;
+    margin: 2px;
+
+    .nome {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+
+    img {
+      max-width: 150px;
+      height: 100px;
+    }
+
+    .preco {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    button {
+      font-size: 1.5em;
+      width: 90%;
+    }
+  }
+}
