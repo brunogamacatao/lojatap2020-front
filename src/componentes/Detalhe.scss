@@ -1,0 +1,11 @@
+.detalhe {
+  display: flex;
+
+  img {
+    max-height: 500px;
+  }
+  .dados {
+    display: flex;
+    flex-direction: column;
+  }
+}

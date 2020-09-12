@@ -1,38 +1,49 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React from 'react';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+
 import './App.scss';
 import ListaDeProdutos from './componentes/ListaDeProdutos';
-
-const URL = 'http://localhost:5000/produtos';
+import PaginaNaoEncontrada from './componentes/PaginaNaoEncontrada';
+import Carrinho from './componentes/Carrinho';
+import Detalhe from './componentes/Detalhe';
+import Rodape from './componentes/Rodape';
+import Cabecalho from './componentes/Cabecalho';
+import Login from './componentes/Login';
+import Interna from './componentes/Interna';
+import RotaPrivada from './componentes/RotaPrivada';
+import Modal from './componentes/Modal';
+import {LojaProvider} from './contexto/LojaContext';
 
 const App = () => {
-  const [produtos, setProdutos] = useState([]);
-  const [carrinho, setCarrinho] = useState([]);
-
-  useEffect(async () => {
-    let res = await axios.get(URL);
-    setProdutos(res.data);
-  }, []);
-
-  const renderProdutoCarrinho = (p) => {
-    return (
-      <li key={p._id}>{p.nome}</li>
-    );
-  };
-
-  const adicionarAoCarrinho = (p) => {
-    setCarrinho([...carrinho, p]);
-  };
-
   return (
-    <>
-      <h1>Loja</h1>
-      <ListaDeProdutos produtos={produtos} onComprar={adicionarAoCarrinho}/>
-      <hr/>
-      <ol>
-        {carrinho.map(renderProdutoCarrinho)}
-      </ol>
-    </>
+    <LojaProvider>
+      <Router>
+        <Cabecalho/>
+        <main role="main" className="flex-shrink-0">
+          <div className="container">
+            <Switch>
+              <Route path="/" exact={true}>
+                <ListaDeProdutos/>
+              </Route>
+              <Route path="/detalhe/:id"><Detalhe/></Route>
+              <Route path="/carrinho">
+                <Carrinho/>
+              </Route>
+              <Route path="/login"><Login/></Route>
+              <RotaPrivada path="/interna" component={Interna} />
+              <Route path="*"><PaginaNaoEncontrada/></Route>
+            </Switch>
+          </div>
+        </main>
+        <Rodape/>
+        <Modal/>
+      </Router>
+    </LojaProvider>
   );
 };
 
